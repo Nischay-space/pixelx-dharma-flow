@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Play, Pause, RotateCcw } from "lucide-react";
+import { Play, Pause, RotateCcw, Maximize2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
 
@@ -9,6 +9,7 @@ const MeditationTimer: React.FC = () => {
   const [duration, setDuration] = useState(300); // 5 minutes in seconds
   const [timeLeft, setTimeLeft] = useState(duration);
   const [isActive, setIsActive] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   useEffect(() => {
     let interval: NodeJS.Timeout | null = null;
@@ -36,7 +37,7 @@ const MeditationTimer: React.FC = () => {
   };
   
   const handleDurationChange = (value: number[]) => {
-    const newDuration = value[0] * 60; // Convert minutes to seconds
+    const newDuration = value[0] * 60;
     setDuration(newDuration);
     if (!isActive) {
       setTimeLeft(newDuration);
@@ -48,9 +49,23 @@ const MeditationTimer: React.FC = () => {
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  const containerClass = isFullscreen 
+    ? "fixed inset-0 z-50 flex items-center justify-center bg-background"
+    : "";
   
   return (
-    <Card className="w-full bg-dharma-purple bg-opacity-10 border-dharma-purple border-opacity-20">
+    <Card className={`w-full bg-dharma-purple bg-opacity-10 border-dharma-purple border-opacity-20 ${containerClass}`}>
       <CardContent className="p-6">
         <div className="flex flex-col items-center">
           <h3 className="font-pixel text-xl mb-6 text-dharma-purple">Meditation Timer</h3>
@@ -95,6 +110,15 @@ const MeditationTimer: React.FC = () => {
             >
               <RotateCcw size={18} />
               <span className="ml-2">Reset</span>
+            </Button>
+
+            <Button
+              onClick={toggleFullscreen}
+              variant="outline"
+              size="lg"
+            >
+              <Maximize2 size={18} />
+              <span className="ml-2">Fullscreen</span>
             </Button>
           </div>
         </div>

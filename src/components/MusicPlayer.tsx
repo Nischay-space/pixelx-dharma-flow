@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Play, Pause, Volume2, Music2, Upload } from "lucide-react";
+import { Play, Pause, Volume2, Music2, Upload, Heart, Star } from "lucide-react";
 import { defaultTracks, type MeditationTrack } from '@/data/meditationTracks';
 
 const MusicPlayer = () => {
@@ -67,6 +67,27 @@ const MusicPlayer = () => {
           
           <div className="w-full">
             <h3 className="font-pixel text-xl mb-4 text-dharma-purple">Meditation Music</h3>
+            
+            <div className="grid grid-cols-2 gap-2 mb-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {}}
+                className="w-full justify-center"
+              >
+                <Star className="mr-2 h-4 w-4" />
+                Creative Boost
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {}}
+                className="w-full justify-center"
+              >
+                <Heart className="mr-2 h-4 w-4" />
+                Stress Relief
+              </Button>
+            </div>
             
             <div className="grid grid-cols-2 gap-2 mb-4 max-h-32 overflow-y-auto">
               {defaultTracks.map((track) => (

@@ -38,3 +38,4 @@ export const defaultTracks: MeditationTrack[] = [
     type: 'creative'
   }
 ];
+
