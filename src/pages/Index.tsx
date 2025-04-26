@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import QuoteCard from "@/components/QuoteCard";
 import MeditationTimer from "@/components/MeditationTimer";
 import PixelVisualization from "@/components/PixelVisualization";
+import MusicPlayer from "@/components/MusicPlayer";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, RefreshCw } from "lucide-react";
 
@@ -85,6 +86,7 @@ const Index = () => {
             <div className="flex flex-col space-y-6">
               <h2 className="font-pixel text-2xl text-dharma-dark dark:text-white">Meditation</h2>
               <MeditationTimer />
+              <MusicPlayer />
             </div>
           </div>
           
