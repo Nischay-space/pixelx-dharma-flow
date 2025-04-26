@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import Navbar from "@/components/Navbar";
 import QuoteCard from "@/components/QuoteCard";
 import MeditationTimer from "@/components/MeditationTimer";
 import PixelVisualization from "@/components/PixelVisualization";
 import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, RefreshCw } from "lucide-react";
 
 const dailyQuotes = [
   {
@@ -33,16 +32,23 @@ const dailyQuotes = [
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isTimerActive, setIsTimerActive] = useState(false);
-  
-  // Select a random quote
-  const randomQuoteIndex = Math.floor(Math.random() * dailyQuotes.length);
-  const dailyQuote = dailyQuotes[randomQuoteIndex];
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(
+    Math.floor(Math.random() * dailyQuotes.length)
+  );
   
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
   };
   
+  const handleNewQuote = () => {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * dailyQuotes.length);
+    } while (newIndex === currentQuoteIndex);
+    setCurrentQuoteIndex(newIndex);
+  };
+
   return (
     <div className={`min-h-screen flex flex-col ${isDarkMode ? 'dark' : ''}`}>
       <Navbar toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} />
@@ -62,9 +68,15 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <div className="flex flex-col space-y-6">
               <h2 className="font-pixel text-2xl text-dharma-dark dark:text-white">Today's Wisdom</h2>
-              <QuoteCard quote={dailyQuote.quote} author={dailyQuote.author} />
+              <QuoteCard quote={dailyQuotes[currentQuoteIndex].quote} author={dailyQuotes[currentQuoteIndex].author} />
               <div className="flex justify-center mt-4">
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleNewQuote}
+                  className="flex items-center gap-2"
+                >
+                  <RefreshCw size={16} />
                   New Quote
                 </Button>
               </div>
